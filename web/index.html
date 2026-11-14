@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ordin 實拿｜小店的外送利潤 agent</title>
+<style>
+:root{--bg:#f6f3ee;--card:#fffdf9;--ink:#1d2327;--mute:#6b7177;--line:#e4ded3;--teal:#0f766e;--teal-s:#d6efe9;--red:#b42318;--red-s:#fde4de;--amber:#b45309;--amber-s:#fdf0d5;--green:#15803d;--green-s:#dcf3e2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums}
+header{position:sticky;top:0;z-index:5;background:#1d2327;color:#fff;padding:10px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+header h1{font-size:18px;margin:0;letter-spacing:.02em}
+header h1 small{font-weight:400;opacity:.7;font-size:13px;margin-left:8px}
+.badge{font-size:12px;padding:2px 8px;border-radius:99px;background:#fbbf24;color:#1d2327;font-weight:600}
+header select,header button{font:inherit;font-size:13px;padding:6px 10px;border-radius:8px;border:1px solid #4b5258;background:#2b3238;color:#fff;cursor:pointer}
+header button.primary{background:var(--teal);border-color:var(--teal)}
+header button:hover{filter:brightness(1.15)}
+header .sp{flex:1}
+header nav button.on{background:#fff;color:#1d2327}
+.wrap{display:grid;grid-template-columns:330px 1fr;gap:18px;padding:18px 20px;max-width:1500px;margin:0 auto}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}}
+aside{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.card h2{font-size:16px;margin:0 0 4px}
+.card .sub{color:var(--mute);font-size:13px;margin:0 0 12px}
+.step{border-left:3px solid var(--line);padding:6px 0 8px 12px;margin-left:4px;font-size:13px}
+.step.ok{border-color:var(--teal)}.step.bad{border-color:var(--red)}
+.step .tool{display:inline-block;font:12px ui-monospace,Menlo,monospace;background:#eee8dc;border-radius:5px;padding:0 6px;margin-right:6px}
+.step .th{color:var(--ink)}.step .res{color:var(--mute);margin-top:2px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:800px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.tile .k{font-size:13px;color:var(--mute)}.tile .v{font-size:28px;font-weight:700;letter-spacing:-.01em}
+.tile .n{font-size:12px;color:var(--mute)}
+.tile.hl{background:#1d2327;color:#fff;border-color:#1d2327}.tile.hl .k,.tile.hl .n{color:#c9ced3}
+.neg{color:var(--red)}.pos{color:var(--green)}
+.flow{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:14px 0 6px}
+.flow div{display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;white-space:nowrap;overflow:hidden}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--mute)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{font-weight:600;text-align:left;color:var(--mute);font-size:12px;border-bottom:1px solid var(--line);padding:6px 8px}
+td{padding:6px 8px;border-bottom:1px solid #efe9de;vertical-align:middle}
+td.r,th.r{text-align:right}
+.pill{display:inline-block;white-space:nowrap;font-size:12px;padding:1px 8px;border-radius:99px;font-weight:600}
+.pill.loss{background:var(--red-s);color:var(--red)}.pill.thin,.pill.doubt{background:var(--amber-s);color:var(--amber)}.pill.ok{background:var(--green-s);color:var(--green)}.pill.hot{background:var(--red-s);color:var(--red)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:1100px){.three{grid-template-columns:1fr}}
+.bars .row{display:grid;grid-template-columns:130px 1fr 1fr;gap:10px;align-items:center;font-size:13px;padding:3px 0}
+.bars .hd{font-size:12px;color:var(--mute);font-weight:600}
+.bar{height:18px;background:#9fb3b0;border-radius:3px}
+.dv{position:relative;height:18px}
+.dv .zero{position:absolute;left:45%;top:-3px;bottom:-3px;width:1px;background:#a8a195}
+.dv .b{position:absolute;top:0;height:18px;border-radius:3px}
+.dv span{position:absolute;top:-1px;font-size:12px}
+.cell{display:inline-block;min-width:74px;text-align:right;padding:2px 8px;border-radius:6px;font-weight:600}
+.cell.loss{background:var(--red-s);color:var(--red)}.cell.thin{background:var(--amber-s);color:var(--amber)}.cell.ok{background:var(--green-s);color:var(--green)}.cell.din{background:#ece7dd;color:#3d4348}
+.act{display:grid;grid-template-columns:24px 1fr 110px;gap:10px;padding:10px 0;border-bottom:1px solid #efe9de;align-items:start}
+.act .t{font-weight:600}.act .why{font-size:13px;color:var(--mute)}
+.act .d{text-align:right;font-weight:700;font-size:16px}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;font-size:15px}
+.total b{font-size:26px}
+.note{background:var(--amber-s);border-radius:10px;padding:8px 12px;font-size:13px;margin-top:10px;color:#6b3d05}
+.cl h3{font-size:14px;margin:12px 0 4px}.cl li{margin:2px 0}
+.report{font-size:14px}.report h3{font-size:15px;margin:14px 0 4px}.report ul{margin:4px 0 4px 0;padding-left:20px}
+.map td{font:12px ui-monospace,Menlo,monospace;padding:2px 8px;border:0}
+.chk{color:var(--green);font-weight:600}
+.empty{padding:60px 20px;text-align:center;color:var(--mute)}
+.hide{display:none}
+.foot{font-size:12px;color:var(--mute);margin:6px 2px 30px}
+button.copy{font:inherit;font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <h1>Ordin 實拿<small>小店的外送利潤 agent</small></h1>
+  <span class="badge">全部為模擬資料</span>
+  <span class="sp"></span>
+  <select id="shop"></select>
+  <button class="primary" id="b-replay">▶ 回放 LLM agent</button>
+  <button id="b-scripted">決定性模式（不用 LLM）</button>
+  <button id="b-live">即時 LLM</button>
+  <nav><button id="n-main" class="on">分析</button> <button id="n-verify">驗證</button></nav>
+</header>
+
+<div class="wrap" id="v-main">
+  <aside>
+    <div class="card">
+      <h2>Agent 做了什麼</h2>
+      <p class="sub" id="mode-note">選一種執行方式開始。</p>
+      <div id="steps"></div>
+    </div>
+    <div class="card hide" id="files-card">
+      <h2>老闆丟進來的檔案</h2>
+      <div id="files" style="font-size:12.5px"></div>
+    </div>
+  </aside>
+  <main id="main"><div class="card empty">把兩個平台的對帳單、菜單成本丟給 agent，看每個品項在每個平台「實拿」多少。<br>按上方「回放 LLM agent」開始。</div></main>
+</div>
+<div class="wrap hide" id="v-verify" style="grid-template-columns:1fr"><main id="verify"></main></div>
+
+<script>
+const $=s=>document.querySelector(s), fmt=n=>Math.round(n).toLocaleString('en-US'), sgn=n=>(n>=0?'+':'−')+fmt(Math.abs(n));
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const qs=new URLSearchParams(location.search); const FAST=qs.has('fast');
+let RUN=null, SHOP=null;
+const PL={A:'平台 A',B:'平台 B'};
+const ST={loss:'賠錢',thin:'做白工',ok:'有賺',doubt:'存疑',hot:'退款熱點'};
+
+async function j(url,body){const r=await fetch(url,body?{method:'POST',body:JSON.stringify(body)}:undefined);return r.json()}
+function md(t){ // 極簡 markdown
+  const out=[];let ul=false;
+  for(const raw of t.split('\n')){let l=esc(raw).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+    if(/^\s*[-*] /.test(raw)){if(!ul){out.push('<ul>');ul=true}out.push('<li>'+l.replace(/^\s*[-*] /,'')+'</li>');continue}
+    if(ul){out.push('</ul>');ul=false}
+    if(/^#{1,4} /.test(raw))out.push('<h3>'+l.replace(/^#{1,4} /,'')+'</h3>');else if(l.trim())out.push('<p style="margin:4px 0">'+l+'</p>')}
+  if(ul)out.push('</ul>');return out.join('')}
+
+function stepSummary(s){const r=s.result||{};
+  if(r.error)return '✗ '+r.error;
+  switch(s.tool){
+    case 'list_files':return r.files.length+' 個檔案';
+    case 'read_file':return '讀了 '+Object.keys(r).join('、');
+    case 'ingest':return r.ok?`✓ ${fmt(r.orders)} 筆訂單，逐筆重算撥款金額 ${(r.payout_match*100).toFixed(0)}% 一致；實際佣金費率 ${(r.effective_rate*100).toFixed(1)}%`:'✗ '+(r.errors||[]).join('；');
+    case 'set_constraints':{const c=r.constraints;return `不可下架：${c.protected_items.join('、')||'無'}；漲價上限：${Object.entries(c.max_raise).map(([k,v])=>k+' +'+v+' 元').join('、')||'無'}、單品 ${(c.max_raise_pct*100).toFixed(0)}%；不能退的活動：${c.locked_promos.join('、')||'無'}`}
+    case 'analyze':return `問題品項 ${r.problem_items.length} 個、活動 ${r.promos.filter(x=>x.status=='loss').length} 個賠錢、廣告 ${r.ads.filter(x=>x.status=='loss').length} 個賠錢`;
+    case 'price_options':return `試算了 ${r.options.length} 個品項、共 ${r.options.reduce((a,o)=>a+(o.options||[]).length+1,0)} 種改法`;
+    case 'simulate':return `整組動作預估每月 ${sgn(r.est_total_delta)} 元；違反老闆限制 ${r.violations.length} 項`;
+    case 'finish':return r.ok?'✓ 交出變更清單':'✗ '+(r.violations||[]).join('；');
+  }return ''}
+function addStep(s){const bad=(s.result&&(s.result.error||s.result.ok===false));
+  $('#steps').insertAdjacentHTML('beforeend',`<div class="step ${bad?'bad':'ok'}"><div class="th"><span class="tool">${esc(s.tool)}</span>${esc(s.thought||'')}</div><div class="res">${esc(stepSummary(s))}</div></div>`);
+  $('#steps').lastChild.scrollIntoView({block:'nearest'})}
+
+async function start(mode){
+  SHOP=$('#shop').value; $('#steps').innerHTML=''; $('#main').innerHTML='<div class="card empty">agent 執行中…</div>';
+  $('#mode-note').textContent={replay:'回放模式：LLM 的每個決定是錄好的，每個數字現場重算。',scripted:'決定性模式：不呼叫 LLM，使用內建欄位對應與規則。',live:'即時模式：現場呼叫 LLM（約 1 分鐘）。'}[mode];
+  loadFiles();
+  if(mode==='live'){const {job,error}=await j('/api/run',{shop:SHOP,mode});if(error){$('#main').innerHTML=`<div class="card empty">${esc(error)}</div>`;return}
+    let shown=0;while(true){const s=await j('/api/job?id='+job);for(;shown<s.steps.length;shown++)addStep(s.steps[shown]);
+      if(s.done){if(s.error){$('#main').innerHTML=`<div class="card empty">LLM 執行失敗：${esc(s.error)}<br>可以改用回放或決定性模式。</div>`;return}RUN=s.run;break}
+      await new Promise(r=>setTimeout(r,800))}
+  }else{RUN=await j('/api/run',{shop:SHOP,mode});if(RUN.error&&!RUN.steps){$('#main').innerHTML=`<div class="card empty">${esc(RUN.error)}</div>`;return}
+    for(const s of RUN.steps){addStep(s);if(!FAST)await new Promise(r=>setTimeout(r,450))}}
+  render()}
+
+async function loadFiles(){const f=await j('/api/files?shop='+SHOP);$('#files-card').classList.remove('hide');
+  $('#files').innerHTML=Object.entries(f.files).map(([n,v])=>`<details><summary>${esc(n)} <span style="color:#6b7177">（${v.total_lines} 行）</span></summary><pre style="white-space:pre-wrap;word-break:break-all;margin:4px 0 8px;font-size:11px;background:#f1ece2;padding:6px;border-radius:6px">${esc((v.head||[]).slice(0,4).join('\n'))}</pre></details>`).join('')}
+
+function render(){
+  if(!RUN.ok){$('#main').innerHTML=`<div class="card"><h2>這次沒有完成</h2><p>${esc(RUN.error||'agent 沒有交出結果')}</p><p class="sub">${RUN.mode==='scripted'?'決定性模式只認得內建的兩種對帳單格式。請改按「回放 LLM agent」或「即時 LLM」，由 LLM 判斷每個欄位的意思。':''}</p></div>`;return}
+  const an=RUN.analysis,t=an.totals,f=RUN.final;
+  const seg=[['佣金與稅',t.commission,'#7c8a94'],['店家負擔折扣',t.merchant_discount,'#c98a2b'],['退款扣款',t.refunds,'#b4533a'],['廣告費',t.ad_spend,'#8a5fa8'],['食材與包材',t.var_cost,'#4f6f8f'],['留下',Math.max(0,t.actual_contribution),'#0f766e']];
+  const tot=seg.reduce((a,s)=>a+s[1],0);
+  let h=`<div class="tiles">
+    <div class="tile"><div class="k">上個月外送營收（平台售價）</div><div class="v num">${fmt(t.sales)}</div><div class="n">${fmt(t.orders)} 筆訂單，兩個平台</div></div>
+    <div class="tile"><div class="k">平台撥款</div><div class="v num">${fmt(t.payout)}</div><div class="n">老闆月底看到的數字</div></div>
+    <div class="tile hl"><div class="k">扣掉食材、包材、廣告後實際留下</div><div class="v num">${fmt(t.actual_contribution)}</div><div class="n">每賣 100 元留下 ${(t.actual_contribution/t.sales*100).toFixed(1)} 元（未扣人事房租）</div></div>
+    <div class="tile"><div class="k">平台 A 新費率，每月再少</div><div class="v num neg">${fmt(Math.abs(t.rate_change_impact))}</div><div class="n">同樣的生意，什麼都不改</div></div></div>
+  <div class="card" style="margin-top:16px"><h2>每 100 元外送營收去了哪裡</h2>
+    <div class="flow">${seg.map(s=>`<div style="width:${s[1]/tot*100}%;background:${s[2]}">${(s[1]/tot*100).toFixed(0)}%</div>`).join('')}</div>
+    <div class="legend">${seg.map(s=>`<span><i style="background:${s[2]}"></i>${s[0]} <b class="num">${fmt(s[1])}</b></span>`).join('')}</div></div>`;
+
+  // 對帳
+  const maps={};for(const s of RUN.steps)if(s.tool==='ingest'&&s.result&&s.result.ok)maps[s.args.platform]=s.args.mapping;
+  h+=`<div class="card"><h2>① 讀檔與對帳：兩個平台、兩種格式</h2><p class="sub">agent 判斷每個欄位的意思，程式逐筆重算撥款金額。對不上就不往下做。${RUN.ingest_attempts>2?`（這次共試了 ${RUN.ingest_attempts} 次才全部通過）`:''}</p><div class="two">`+
+   ['A','B'].map(p=>{const r=RUN.ingest[p],m=(maps[p]||{}).orders||{};const show=['subtotal','merchant_discount','commission','commission_tax','adjustment','payout'];const zh={subtotal:'商品小計',merchant_discount:'店家負擔折扣',commission:'佣金',commission_tax:'佣金營業稅',adjustment:'退款扣款',payout:'撥款金額'};
+    return `<div><b>${PL[p]}</b>　<span class="chk">✓ ${fmt(r.orders)} 筆訂單，撥款金額逐筆一致 ${(r.payout_match*100).toFixed(0)}%</span>
+     <div style="font-size:13px;color:#6b7177">撥款合計 ${fmt(r.payout_total)} 元；佣金費率 ${(r.effective_rate*100).toFixed(1)}%（合約 ${(r.contract_rate*100).toFixed(1)}%）；廣告費 ${fmt(r.ad_spend_total)} 元</div>
+     <table class="map" style="margin-top:6px;width:auto">${show.map(k=>`<tr><td style="color:#6b7177">${zh[k]}</td><td>←</td><td>${esc(m[k]||'')}</td></tr>`).join('')}</table></div>`}).join('')+`</div></div>`;
+
+  // 營收 vs 實拿
+  const top=[...an.items].sort((a,b)=>b.sales-a.sales).slice(0,10),mx=Math.max(...top.map(r=>r.sales)),mm=Math.max(...top.map(r=>Math.abs(r.month_next)));
+  h+=`<div class="card"><h2>② 營收排行 vs 實拿：賣最好的，不一定有賺</h2><p class="sub">左：老闆平常看的營收排行。右：新費率下，這個品項一個月實際留下多少（已扣佣金、稅、折扣分攤、退款、食材、包材）。</p><div class="bars">
+   <div class="row hd"><div></div><div>上個月營收</div><div>一個月實際留下</div></div>`+
+   top.map(r=>{const w=Math.abs(r.month_next)/mm*40,neg=r.month_next<0;return `<div class="row"><div>${r.platform}・${esc(r.item)}</div>
+     <div style="display:flex;align-items:center;gap:6px"><div class="bar" style="width:${r.sales/mx*78}%"></div><span class="num">${fmt(r.sales)}</span></div>
+     <div class="dv"><div class="zero"></div><div class="b" style="${neg?`right:55%;width:${Math.max(.6,w)}%`:`left:45%;width:${Math.max(.6,w)}%`};background:${neg?'#b42318':'#0f766e'}"></div><span class="num ${neg?'neg':''}" style="${neg?`right:${56+w}%`:`left:${46+w}%`}">${sgn(r.month_next)}</span></div></div>`}).join('')+`</div></div>`;
+
+  // 每份實拿表
+  const names=[...new Set(an.items.map(r=>r.item))];const by={};an.items.forEach(r=>by[r.key]=r);
+  h+=`<div class="card"><h2>③ 每賣一份，實拿多少（新費率）</h2><p class="sub">同一個品項，在不同通路留下的錢差很多。格子裡是「售價 → 每份實拿」。</p><table>
+   <tr><th>品項</th><th class="r">內用外帶</th><th class="r">${PL.A}</th><th class="r">${PL.B}</th><th class="r">只扣抽成的算法（${PL.A}）</th></tr>`+
+   names.map(n=>{const a=by['A|'+n],b=by['B|'+n],d=(a||b);const c=r=>r?`<span class="num" style="color:#6b7177">${fmt(r.price)} →</span> <span class="cell num ${r.status}">${r.unit_next.toFixed(1)}</span>`:'—';
+    return `<tr><td>${esc(n)}</td><td class="r"><span class="num" style="color:#6b7177">${fmt(d.dine)} →</span> <span class="cell din num">${d.dine_unit.toFixed(1)}</span></td><td class="r">${c(a)}</td><td class="r">${c(b)}</td><td class="r num" style="color:#6b7177">${a?a.naive_unit.toFixed(1):'—'}</td></tr>`}).join('')+
+   `</table><div class="legend" style="margin-top:8px"><span><i style="background:#fde4de"></i>賠錢</span><span><i style="background:#fdf0d5"></i>做白工（留下不到售價 8%）</span><span><i style="background:#dcf3e2"></i>有賺</span><span>最右欄是「售價 ×(1−抽成) − 食材」，沒算稅、包材，所以看起來都有賺。</span></div></div>`;
+
+  // 活動、廣告、退款
+  h+=`<div class="three"><div class="card"><h2>④ 活動</h2><p class="sub">扣掉折扣後，活動訂單每單實拿</p><table><tr><th>活動</th><th class="r">單數</th><th class="r">每單</th><th></th></tr>`+
+   an.promos.map(r=>`<tr><td>${r.platform}・${esc(r.name)}</td><td class="r num">${r.orders}</td><td class="r num ${r.per_order<0?'neg':''}">${r.per_order.toFixed(1)}</td><td><span class="pill ${r.status}">${ST[r.status]}</span></td></tr>`).join('')+`</table></div>
+   <div class="card"><h2>廣告</h2><p class="sub">廣告費 vs 帶來的單總共實拿</p><table><tr><th>廣告</th><th class="r">花費</th><th class="r">帶單實拿</th><th></th></tr>`+
+   an.ads.map(r=>`<tr><td>${esc(r.key)}（${r.orders} 單）</td><td class="r num">${fmt(r.spend)}</td><td class="r num">${fmt(r.contribution)}</td><td><span class="pill ${r.status}">${ST[r.status]}</span></td></tr>`).join('')+`</table></div>
+   <div class="card"><h2>退款</h2><p class="sub">哪個品項最常被客訴退款</p><table><tr><th>品項</th><th class="r">退款率</th><th class="r">被扣</th><th></th></tr>`+
+   an.refunds.slice(0,4).map(r=>`<tr><td>${esc(r.item)}</td><td class="r num">${(r.rate*100).toFixed(1)}%</td><td class="r num">${fmt(r.amount)}</td><td>${r.status=='hot'?'<span class="pill hot">熱點</span>':''}</td></tr>`).join('')+`</table></div></div>`;
+
+  // 動作
+  const title=a=>({set_price:`${PL[a.platform]}｜${a.item}　${fmt(a.old_price)} → ${fmt(a.price)} 元`,delist:`${PL[a.platform]}｜${a.item}　下架，只做內用外帶`,end_promo:`${PL[a.platform]}｜退出活動 ${a.promo_id}`,stop_ad:`${PL[a.platform]}｜停止廣告 ${a.campaign}`,fix_packaging:`店內｜${a.item} 換防漏包材`}[a.type]);
+  h+=`<div class="card"><h2>⑤ 建議動作：每一項都先試算過，老闆勾選後才算數</h2><p class="sub">預估假設：售價每漲 1%，該品項銷量掉 1.5%；活動與廣告帶來的單有一半本來就會來。取消勾選會即時重算。</p>
+   <div id="acts">`+f.actions.map((a,i)=>`<label class="act"><input type="checkbox" checked data-i="${i}"><div><div class="t">${esc(title(a))}</div><div class="why">${esc(a.reason||'')}</div></div><div class="d num pos">${sgn(a.est_delta)}<div style="font-size:11px;font-weight:400;color:#6b7177">元／月</div></div></label>`).join('')+`</div>`+
+   (f.notes||[]).map(n=>`<div class="note">提醒：${esc(n.text)}</div>`).join('')+
+   `<div class="total"><span>不動作，下個月預估留下 <b class="num" style="font-size:16px">${fmt(f.base_next)}</b> 元。勾選的動作全部照做，預估每月多留下</span><b class="num pos" id="tot">${sgn(f.est_total)} 元</b></div>
+   <div style="font-size:12px;color:#6b7177" id="viol">✓ 沒有違反老闆的限制（${esc(consText(f.constraints))}）</div></div>`;
+
+  h+=`<div class="two"><div class="card cl"><h2>⑥ 變更清單：照著改後台</h2><p class="sub">目前由老闆自己到各平台後台修改；之後可接平台 API 自動套用。 <button class="copy" id="copy">複製</button></p><div id="cl"></div></div>
+   <div class="card"><h2>agent 給老闆的說明</h2><p class="sub">${RUN.mode==='scripted'?'決定性模式：由範本產生':'LLM 撰寫；金額必須來自工具輸出'}</p><div class="report">${md(f.report||'')}</div></div></div>
+   <div class="foot">「實拿／留下」指邊際貢獻：售價扣掉平台佣金與稅、店家負擔的折扣、退款、廣告、食材與包材，未扣人事與房租。所有資料為模擬資料。</div>`;
+  $('#main').innerHTML=h; renderCL(f.change_list);
+  document.querySelectorAll('#acts input').forEach(c=>c.onchange=resim);
+  $('#copy').onclick=()=>navigator.clipboard.writeText($('#cl').innerText);
+}
+function consText(c){return `不可下架：${c.protected_items.join('、')||'無'}；${Object.entries(c.max_raise).map(([k,v])=>k+'最多漲 '+v+' 元').join('、')}；單品最多漲 ${(c.max_raise_pct*100).toFixed(0)}%；不能退：${c.locked_promos.join('、')||'無'}`}
+function renderCL(cl){$('#cl').innerHTML=Object.entries(cl).map(([p,xs])=>`<h3>${PL[p]||p}</h3><ul>${xs.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`).join('')||'<p class="sub">沒有勾選任何動作。</p>'}
+async function resim(){const f=RUN.final;const acts=[...document.querySelectorAll('#acts input')].filter(c=>c.checked).map(c=>{const a={...f.actions[c.dataset.i]};delete a.est_delta;delete a.reason;return a});
+  const r=await j('/api/simulate',{shop:SHOP,actions:acts});if(r.error)return;
+  $('#tot').textContent=sgn(r.est_total_delta)+' 元';renderCL(r.change_list);
+  $('#viol').textContent=r.violations.length?'✗ '+r.violations.join('；'):'✓ 沒有違反老闆的限制（'+consText(f.constraints)+'）'}
+
+// ---------------- 驗證頁
+const CZ={loss_item:'賠錢品項',loss_promo:'賠錢活動',loss_ad:'賠錢廣告',refund_hotspot:'退款熱點',all:'合計'};
+const SN={agent:'本系統（只動有問題的地方）',agent_all:'本系統（全品項在上限內試算）',blanket10:'全面漲 10%',breakeven:'全面漲到打平價（店內價 ÷ (1−抽成)）',quit_worse:'退出較差的平台'};
+async function verify(){const d=await j('/api/benchmark');const b=d.benchmark,l=d.llm_eval;if(!b){$('#verify').innerHTML='<div class="card empty">還沒有驗證結果。請先執行 python3 run.py bench</div>';return}
+  const pc=v=>v==null?'—':(v*100).toFixed(0)+'%';
+  let h=`<div class="tiles"><div class="tile"><div class="k">模擬店家</div><div class="v num">${b.n_shops}</div><div class="n">便當、麵食、早午餐三種；埋入 ${Object.values(b.truth_counts).reduce((a,x)=>a+x,0)} 個已知問題</div></div>
+   <div class="tile hl"><div class="k">本系統找出率</div><div class="v num">${pc(b.detection.engine.all.recall)}</div><div class="n">精確率 ${pc(b.detection.engine.all.precision)}；對帳硬檢查 ${b.reconciliation_ok}/${b.n_shops} 家通過</div></div>
+   <div class="tile"><div class="k">「只看營收報表」找出率</div><div class="v num">${pc(b.detection.revenue_only.all.recall)}</div><div class="n">「只扣抽成」算法：${pc(b.detection.commission_only.all.recall)}</div></div>
+   <div class="tile"><div class="k">建議動作的實際效果（基準）</div><div class="v num pos">${sgn(b.decision['基準'].agent.mean)}</div><div class="n">元／月／店；${pc(b.decision['基準'].agent.share_positive)} 的店家有改善</div></div></div>
+  <div class="card" style="margin-top:16px"><h2>1. 找出率：埋了已知問題的 ${b.n_shops} 家模擬店家</h2><p class="sub">正解由資料產生器的內部參數決定；系統只能讀匯出的 CSV。「只看營收」對照組已知道每類有幾個問題（對它很寬鬆）。</p>
+   <table><tr><th>問題類型</th><th class="r">正解數</th><th class="r">本系統 找出率</th><th class="r">本系統 精確率</th><th class="r">只看營收報表</th><th class="r">只扣抽成</th></tr>`+
+   ['loss_item','loss_promo','loss_ad','refund_hotspot','all'].map(c=>`<tr style="${c=='all'?'font-weight:700':''}"><td>${CZ[c]}</td><td class="r num">${c=='all'?Object.values(b.truth_counts).reduce((a,x)=>a+x,0):b.truth_counts[c]}</td><td class="r num">${pc(b.detection.engine[c].recall)}</td><td class="r num">${pc(b.detection.engine[c].precision)}</td><td class="r num">${pc(b.detection.revenue_only[c].recall)}</td><td class="r num">${pc(b.detection.commission_only[c].recall)}</td></tr>`).join('')+`</table></div>
+  <div class="card"><h2>2. 決策效果：下個月外送留下的錢，比不動作多多少（元／月，每家平均）</h2><p class="sub">評分用的模擬器使用系統看不到的真實需求彈性與活動增量。三欄是把真實彈性乘上 0.5、1、1.5 的敏感度分析。</p>
+   <table><tr><th>做法</th>${Object.keys(b.decision).map(s=>`<th class="r">${s}</th><th class="r">變差的店</th>`).join('')}<th class="r">違反老闆限制的動作</th></tr>`+
+   Object.keys(SN).map(k=>`<tr style="${k=='agent'?'font-weight:700;background:#eef7f4':''}"><td>${SN[k]}</td>${Object.values(b.decision).map(x=>`<td class="r num ${x[k].mean<0?'neg':''}">${sgn(x[k].mean)}</td><td class="r num">${pc(1-x[k].share_positive)}</td>`).join('')}<td class="r num">${b.violations[k]}</td></tr>`).join('')+
+   `</table><p class="sub" style="margin-top:10px">不動作時每家平均留下 ${fmt(b.decision['基準'].base_mean)} 元／月。系統事前預估平均 ${sgn(b.calibration.est_mean)}，模擬器實際 ${sgn(b.calibration.real_mean)}，平均絕對誤差 ${pc(b.calibration.mean_abs_pct_err)}。</p></div>`;
+  if(l){const s=l.summary;h+=`<div class="card"><h2>3. LLM agent 端到端：${s.n} 家店，平台 B 換成沒看過的對帳單表頭</h2><p class="sub">決定性模式讀得懂的家數：${s.scripted_mode_could_read}/${s.n}。LLM（${esc(s.model)}，經 ${s.backend==='cli'?'本機 claude CLI':'Messages API'}）必須自己判斷欄位。</p>
+   <table><tr><th>指標</th><th class="r">結果</th></tr>
+   <tr><td>完成整個流程並交出變更清單</td><td class="r num">${s.completed}/${s.n}</td></tr>
+   <tr><td>兩個平台都通過對帳硬檢查（撥款金額 100% 一致）</td><td class="r num">${s.ingest_ok}/${s.completed}</td></tr>
+   <tr><td>從老闆的口語備註正確讀出全部限制</td><td class="r num">${s.constraints_correct}/${s.completed}</td></tr>
+   <tr><td>違反老闆限制的動作</td><td class="r num">${s.violations}</td></tr>
+   <tr><td>埋入的問題被動作處理到（不含老闆說不能動的）</td><td class="r num">${s.issues_handled}/${s.issues_total}</td></tr>
+   <tr><td>說明文字中的金額可在工具輸出中找到</td><td class="r num">${s.report_numbers_traceable}/${s.report_numbers}</td></tr>
+   <tr><td>實際效果（模擬器，元／月／店）：LLM agent／規則版</td><td class="r num">${sgn(s.true_delta_mean)}／${sgn(s.rule_playbook_true_delta_mean)}</td></tr>
+   <tr><td>平均步數／秒數</td><td class="r num">${s.steps_mean} 步／${s.seconds_mean} 秒</td></tr></table></div>`}
+  h+=`<div class="foot">限制：全部是自行產生的模擬資料；正解即完整成本會計，所以引擎找出率 100% 是「程式算對」的必要條件，不代表真實世界表現。需求彈性是假設。重現指令：python3 run.py bench、python3 run.py llm-eval</div>`;
+  $('#verify').innerHTML=h}
+
+function view(v){$('#v-main').classList.toggle('hide',v!=='main');$('#v-verify').classList.toggle('hide',v!=='verify');$('#n-main').classList.toggle('on',v==='main');$('#n-verify').classList.toggle('on',v==='verify');if(v==='verify')verify()}
+(async()=>{const shops=await j('/api/shops');$('#shop').innerHTML=shops.map(s=>`<option value="${s.id}">${esc(s.name)}・${s.id==='demo_newformat'?'平台 B 為新格式':'標準格式'}</option>`).join('');
+  if(qs.get('shop'))$('#shop').value=qs.get('shop');else if(shops.find(s=>s.id==='demo_newformat'))$('#shop').value='demo_newformat';
+  $('#b-replay').onclick=()=>{view('main');start('replay')};$('#b-scripted').onclick=()=>{view('main');start('scripted')};$('#b-live').onclick=()=>{view('main');start('live')};
+  $('#n-main').onclick=()=>view('main');$('#n-verify').onclick=()=>view('verify');
+  if(qs.get('view')==='verify')view('verify');else if(qs.get('mode'))start(qs.get('mode'))})();
+</script>
+</body>
+</html>

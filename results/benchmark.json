@@ -1,0 +1,600 @@
+{
+ "n_shops": 30,
+ "reconciliation_ok": 30,
+ "truth_counts": {
+  "loss_item": 86,
+  "loss_promo": 50,
+  "loss_ad": 37,
+  "refund_hotspot": 30
+ },
+ "detection": {
+  "engine": {
+   "loss_item": {
+    "tp": 86,
+    "fp": 0,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 1.0
+   },
+   "loss_promo": {
+    "tp": 50,
+    "fp": 0,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 1.0
+   },
+   "loss_ad": {
+    "tp": 37,
+    "fp": 0,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 1.0
+   },
+   "refund_hotspot": {
+    "tp": 30,
+    "fp": 0,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 1.0
+   },
+   "all": {
+    "tp": 203,
+    "fp": 0,
+    "fn": 0,
+    "recall": 1.0,
+    "precision": 1.0
+   }
+  },
+  "revenue_only": {
+   "loss_item": {
+    "tp": 14,
+    "fp": 72,
+    "fn": 72,
+    "recall": 0.163,
+    "precision": 0.163
+   },
+   "loss_promo": {
+    "tp": 17,
+    "fp": 33,
+    "fn": 33,
+    "recall": 0.34,
+    "precision": 0.34
+   },
+   "loss_ad": {
+    "tp": 21,
+    "fp": 16,
+    "fn": 16,
+    "recall": 0.568,
+    "precision": 0.568
+   },
+   "refund_hotspot": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 30,
+    "recall": 0.0,
+    "precision": null
+   },
+   "all": {
+    "tp": 52,
+    "fp": 121,
+    "fn": 151,
+    "recall": 0.256,
+    "precision": 0.301
+   }
+  },
+  "commission_only": {
+   "loss_item": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 86,
+    "recall": 0.0,
+    "precision": null
+   },
+   "loss_promo": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 50,
+    "recall": 0.0,
+    "precision": null
+   },
+   "loss_ad": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 37,
+    "recall": 0.0,
+    "precision": null
+   },
+   "refund_hotspot": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 30,
+    "recall": 0.0,
+    "precision": null
+   },
+   "all": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 203,
+    "recall": 0.0,
+    "precision": null
+   }
+  }
+ },
+ "decision": {
+  "低彈性（×0.5）": {
+   "base_mean": 17922,
+   "agent": {
+    "mean": 20983,
+    "median": 19852,
+    "min": 9181,
+    "max": 40611,
+    "share_positive": 1.0,
+    "agent_wins": 1.0
+   },
+   "agent_all": {
+    "mean": 35391,
+    "median": 36992,
+    "min": 19007,
+    "max": 53670,
+    "share_positive": 1.0,
+    "agent_wins": 0.0
+   },
+   "blanket10": {
+    "mean": 16248,
+    "median": 17231,
+    "min": 8560,
+    "max": 23509,
+    "share_positive": 1.0,
+    "agent_wins": 0.8
+   },
+   "breakeven": {
+    "mean": 40547,
+    "median": 41305,
+    "min": 16409,
+    "max": 62661,
+    "share_positive": 1.0,
+    "agent_wins": 0.0
+   },
+   "quit_worse": {
+    "mean": -3325,
+    "median": -5354,
+    "min": -13870,
+    "max": 10067,
+    "share_positive": 0.3,
+    "agent_wins": 1.0
+   }
+  },
+  "基準": {
+   "base_mean": 17922,
+   "agent": {
+    "mean": 20624,
+    "median": 19352,
+    "min": 9004,
+    "max": 38917,
+    "share_positive": 1.0,
+    "agent_wins": 1.0
+   },
+   "agent_all": {
+    "mean": 28427,
+    "median": 28253,
+    "min": 15040,
+    "max": 43882,
+    "share_positive": 1.0,
+    "agent_wins": 0.0
+   },
+   "blanket10": {
+    "mean": 12068,
+    "median": 12368,
+    "min": 5868,
+    "max": 18161,
+    "share_positive": 1.0,
+    "agent_wins": 1.0
+   },
+   "breakeven": {
+    "mean": 20876,
+    "median": 19951,
+    "min": 6627,
+    "max": 36736,
+    "share_positive": 1.0,
+    "agent_wins": 0.467
+   },
+   "quit_worse": {
+    "mean": -3325,
+    "median": -5354,
+    "min": -13870,
+    "max": 10067,
+    "share_positive": 0.3,
+    "agent_wins": 1.0
+   }
+  },
+  "高彈性（×1.5）": {
+   "base_mean": 17922,
+   "agent": {
+    "mean": 20301,
+    "median": 19289,
+    "min": 8848,
+    "max": 37251,
+    "share_positive": 1.0,
+    "agent_wins": 1.0
+   },
+   "agent_all": {
+    "mean": 21618,
+    "median": 20687,
+    "min": 10977,
+    "max": 34798,
+    "share_positive": 1.0,
+    "agent_wins": 0.233
+   },
+   "blanket10": {
+    "mean": 8013,
+    "median": 7622,
+    "min": 1403,
+    "max": 14667,
+    "share_positive": 1.0,
+    "agent_wins": 1.0
+   },
+   "breakeven": {
+    "mean": 3278,
+    "median": 2756,
+    "min": -7827,
+    "max": 22267,
+    "share_positive": 0.633,
+    "agent_wins": 1.0
+   },
+   "quit_worse": {
+    "mean": -3325,
+    "median": -5354,
+    "min": -13870,
+    "max": 10067,
+    "share_positive": 0.3,
+    "agent_wins": 1.0
+   }
+  }
+ },
+ "violations": {
+  "agent": 0,
+  "agent_all": 0,
+  "blanket10": 24,
+  "breakeven": 571,
+  "quit_worse": 30
+ },
+ "shops": [
+  {
+   "seed": 1,
+   "arch": "麵食",
+   "sales": 361160,
+   "issues": 7,
+   "n_actions": 9,
+   "est": 36705,
+   "base": 4591,
+   "real": 38917,
+   "rate_impact": -5197
+  },
+  {
+   "seed": 2,
+   "arch": "早午餐",
+   "sales": 269115,
+   "issues": 9,
+   "n_actions": 10,
+   "est": 19336,
+   "base": 11673,
+   "real": 20386,
+   "rate_impact": -3830
+  },
+  {
+   "seed": 3,
+   "arch": "便當",
+   "sales": 385065,
+   "issues": 5,
+   "n_actions": 7,
+   "est": 18971,
+   "base": 26811,
+   "real": 18885,
+   "rate_impact": -4705
+  },
+  {
+   "seed": 4,
+   "arch": "麵食",
+   "sales": 358280,
+   "issues": 8,
+   "n_actions": 10,
+   "est": 24633,
+   "base": 13022,
+   "real": 25341,
+   "rate_impact": -4369
+  },
+  {
+   "seed": 5,
+   "arch": "早午餐",
+   "sales": 314480,
+   "issues": 6,
+   "n_actions": 5,
+   "est": 13467,
+   "base": 18399,
+   "real": 12599,
+   "rate_impact": -3861
+  },
+  {
+   "seed": 6,
+   "arch": "便當",
+   "sales": 377390,
+   "issues": 8,
+   "n_actions": 9,
+   "est": 28498,
+   "base": 11785,
+   "real": 28950,
+   "rate_impact": -4845
+  },
+  {
+   "seed": 7,
+   "arch": "麵食",
+   "sales": 431185,
+   "issues": 8,
+   "n_actions": 9,
+   "est": 31993,
+   "base": 11078,
+   "real": 33902,
+   "rate_impact": -5255
+  },
+  {
+   "seed": 8,
+   "arch": "早午餐",
+   "sales": 189335,
+   "issues": 7,
+   "n_actions": 7,
+   "est": 7933,
+   "base": 16034,
+   "real": 9004,
+   "rate_impact": -2982
+  },
+  {
+   "seed": 9,
+   "arch": "便當",
+   "sales": 399020,
+   "issues": 6,
+   "n_actions": 6,
+   "est": 20728,
+   "base": 20572,
+   "real": 20153,
+   "rate_impact": -5057
+  },
+  {
+   "seed": 10,
+   "arch": "麵食",
+   "sales": 267920,
+   "issues": 8,
+   "n_actions": 8,
+   "est": 12733,
+   "base": 16860,
+   "real": 14498,
+   "rate_impact": -3837
+  },
+  {
+   "seed": 11,
+   "arch": "早午餐",
+   "sales": 259160,
+   "issues": 7,
+   "n_actions": 9,
+   "est": 20528,
+   "base": 5417,
+   "real": 21211,
+   "rate_impact": -3341
+  },
+  {
+   "seed": 12,
+   "arch": "便當",
+   "sales": 363255,
+   "issues": 9,
+   "n_actions": 9,
+   "est": 19854,
+   "base": 18415,
+   "real": 21942,
+   "rate_impact": -5327
+  },
+  {
+   "seed": 13,
+   "arch": "麵食",
+   "sales": 381555,
+   "issues": 9,
+   "n_actions": 8,
+   "est": 24684,
+   "base": 19505,
+   "real": 22396,
+   "rate_impact": -5906
+  },
+  {
+   "seed": 14,
+   "arch": "早午餐",
+   "sales": 261935,
+   "issues": 6,
+   "n_actions": 5,
+   "est": 11491,
+   "base": 21523,
+   "real": 11784,
+   "rate_impact": -3280
+  },
+  {
+   "seed": 15,
+   "arch": "便當",
+   "sales": 450765,
+   "issues": 7,
+   "n_actions": 7,
+   "est": 23516,
+   "base": 23372,
+   "real": 25544,
+   "rate_impact": -6554
+  },
+  {
+   "seed": 16,
+   "arch": "麵食",
+   "sales": 338045,
+   "issues": 6,
+   "n_actions": 5,
+   "est": 19781,
+   "base": 21608,
+   "real": 18962,
+   "rate_impact": -4434
+  },
+  {
+   "seed": 17,
+   "arch": "早午餐",
+   "sales": 273255,
+   "issues": 7,
+   "n_actions": 8,
+   "est": 14890,
+   "base": 14897,
+   "real": 15579,
+   "rate_impact": -4378
+  },
+  {
+   "seed": 18,
+   "arch": "便當",
+   "sales": 327055,
+   "issues": 7,
+   "n_actions": 7,
+   "est": 18009,
+   "base": 16123,
+   "real": 18035,
+   "rate_impact": -4410
+  },
+  {
+   "seed": 19,
+   "arch": "麵食",
+   "sales": 444790,
+   "issues": 5,
+   "n_actions": 5,
+   "est": 17135,
+   "base": 40136,
+   "real": 16321,
+   "rate_impact": -5534
+  },
+  {
+   "seed": 20,
+   "arch": "早午餐",
+   "sales": 247105,
+   "issues": 5,
+   "n_actions": 7,
+   "est": 11787,
+   "base": 24833,
+   "real": 10394,
+   "rate_impact": -2958
+  },
+  {
+   "seed": 21,
+   "arch": "便當",
+   "sales": 451605,
+   "issues": 8,
+   "n_actions": 6,
+   "est": 25599,
+   "base": 24383,
+   "real": 25565,
+   "rate_impact": -6310
+  },
+  {
+   "seed": 22,
+   "arch": "麵食",
+   "sales": 417475,
+   "issues": 6,
+   "n_actions": 7,
+   "est": 17993,
+   "base": 38924,
+   "real": 17315,
+   "rate_impact": -6142
+  },
+  {
+   "seed": 23,
+   "arch": "早午餐",
+   "sales": 242335,
+   "issues": 7,
+   "n_actions": 7,
+   "est": 10273,
+   "base": 16730,
+   "real": 11126,
+   "rate_impact": -3754
+  },
+  {
+   "seed": 24,
+   "arch": "便當",
+   "sales": 323430,
+   "issues": 6,
+   "n_actions": 6,
+   "est": 27514,
+   "base": 11107,
+   "real": 28685,
+   "rate_impact": -3728
+  },
+  {
+   "seed": 25,
+   "arch": "麵食",
+   "sales": 392495,
+   "issues": 7,
+   "n_actions": 9,
+   "est": 30757,
+   "base": -11315,
+   "real": 30033,
+   "rate_impact": -5001
+  },
+  {
+   "seed": 26,
+   "arch": "早午餐",
+   "sales": 262305,
+   "issues": 6,
+   "n_actions": 7,
+   "est": 10910,
+   "base": 22968,
+   "real": 11836,
+   "rate_impact": -3847
+  },
+  {
+   "seed": 27,
+   "arch": "便當",
+   "sales": 375810,
+   "issues": 6,
+   "n_actions": 7,
+   "est": 18600,
+   "base": 31240,
+   "real": 19742,
+   "rate_impact": -3825
+  },
+  {
+   "seed": 28,
+   "arch": "麵食",
+   "sales": 364550,
+   "issues": 5,
+   "n_actions": 5,
+   "est": 17218,
+   "base": 23932,
+   "real": 18865,
+   "rate_impact": -4304
+  },
+  {
+   "seed": 29,
+   "arch": "早午餐",
+   "sales": 220425,
+   "issues": 6,
+   "n_actions": 6,
+   "est": 17752,
+   "base": 12969,
+   "real": 18145,
+   "rate_impact": -2718
+  },
+  {
+   "seed": 30,
+   "arch": "便當",
+   "sales": 419245,
+   "issues": 6,
+   "n_actions": 7,
+   "est": 31129,
+   "base": 10074,
+   "real": 32612,
+   "rate_impact": -5644
+  }
+ ],
+ "sales_mean": 338985,
+ "rate_impact_mean": -4511,
+ "calibration": {
+  "est_mean": 20147,
+  "real_mean": 20624,
+  "mean_abs_pct_err": 0.054
+ }
+}
